@@ -399,7 +399,7 @@ public class FileSystem {
 	
 	public void ls() {
 		if (usedDir == null) {
-			System.err.println("O sistema não encontra-se em um diretório.");
+			System.out.println(principal.ls());
 		} else {
 			System.out.println(usedDir.ls());
 		}
@@ -437,11 +437,18 @@ public class FileSystem {
 		boolean found = false;
 		for (int i = 0; i < principal.getblocks().length; i++) {
 			if (principal.getblocks()[i] != null) {
-				if (principal.getblocks()[i].getDir().equals(dir))
 
-					found = true;
-				if (found)
-					break;
+				if(principal.getblocks()[i].getDir()!=null) {
+					if (principal.getblocks()[i].getDir().equals(dir)) {
+						found = true;
+					}
+						
+					if (found) { 
+						break;
+					}
+						
+				}
+				
 			}
 		}
 		if (!found) {

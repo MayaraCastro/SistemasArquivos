@@ -61,8 +61,8 @@ public class Partition {
 		this.directories.add(dir);
 		this.usedSize += dir.getsize();
 		result = true;
-		for (int i = k; i < dir.getsize()/Block.getSize(); i++)
-			blocks[i] = new Block(dir);
+		for (int i = 0; i < dir.getsize()/Block.getSize(); i++)
+			blocks[k++] = new Block(dir);
 		return result;
 	}
 	
@@ -154,5 +154,23 @@ public class Partition {
 		retorno += "----------------------------------------------------------------\n";
 		return retorno;
 	}
+	public String ls() {
+		String retorno = "----------------------------------------------------------------\n";
+		retorno+= "Pasta de "+ this.getName() +":\\"+" \n";
+		
+		if (directories.size() != 0) {
+			retorno += "\n";
+			Directory dir;
+			for (int i = 0; i < directories.size(); i++) {
+				dir = directories.get(i);
+				retorno += dir.getmodificationDate().toLocalDate().toString() +"\t"+ "<DIR>" + "\t";
+				retorno +=  dir.getsize()+"  " +  dir.getName()+"\n";
+			}
+		}
+		retorno += "----------------------------------------------------------------\n";
+		
+		return retorno;
+	}
+		
 	
 }
