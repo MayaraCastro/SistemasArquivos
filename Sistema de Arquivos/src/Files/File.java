@@ -10,9 +10,9 @@ public class File {
 	private int size;
 	private String data;
 	private String path;
-	private Diretorio parent;
+	private Directory parent;
 	
-	public File(String name, String data, String path, Diretorio parent) {
+	public File(String name, String data, String path, Directory parent) {
 		this.data = data;
 		this.size = data.length() + 1;
 		this.creationDate = LocalDateTime.now();
@@ -24,7 +24,7 @@ public class File {
 //		geraExtensao(nome);
 	}
 	
-	public File(String name, int size, String path, Diretorio parent) {
+	public File(String name, int size, String path, Directory parent) {
 		this.data = data;
 		this.size = data.length() + 1;
 		this.creationDate = LocalDateTime.now();
@@ -85,11 +85,11 @@ public class File {
 		this.path = path;
 	}
 
-	public Diretorio getParent() {
+	public Directory getParent() {
 		return parent;
 	}
 
-	public void setParent(Diretorio parent) {
+	public void setParent(Directory parent) {
 		this.parent = parent;
 	}
 

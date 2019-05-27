@@ -3,7 +3,7 @@ package Files;
 public class Bloco {
 
 	private File arq;
-	private Diretorio dir;
+	private Directory dir;
 	private static final int TAMANHO = 1;
 	
 	public Bloco(File arq) {
@@ -11,7 +11,7 @@ public class Bloco {
 		this.dir = null;
 	}
 	
-	public Bloco(Diretorio dir) {
+	public Bloco(Directory dir) {
 		this.arq = null;
 		this.dir = dir;
 	}
@@ -24,11 +24,11 @@ public class Bloco {
 		this.arq = arq;
 	}
 
-	public Diretorio getDir() {
+	public Directory getDir() {
 		return dir;
 	}
 
-	public void setDir(Diretorio dir) {
+	public void setDir(Directory dir) {
 		this.dir = dir;
 	}
 

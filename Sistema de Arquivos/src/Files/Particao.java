@@ -9,7 +9,7 @@ public class Particao {
 	private int tamanhoTotal;
 	private int tamanhoUtilizado;
 	private Bloco [] blocos;
-	private ArrayList<Diretorio> diretorios;
+	private ArrayList<Directory> directories;
 	private LocalDateTime dataDeCriacao;
 	
 	public Particao(String nome, int tamanhoTotal) {
@@ -17,7 +17,7 @@ public class Particao {
 		this.tamanhoTotal = tamanhoTotal;
 		this.tamanhoUtilizado = 0;
 		this.blocos = new Bloco[tamanhoTotal/Bloco.getTamanho()];
-		this.diretorios = new ArrayList<Diretorio>();
+		this.directories = new ArrayList<Directory>();
 		this.dataDeCriacao = LocalDateTime.now();
 	}
 
@@ -45,20 +45,20 @@ public class Particao {
 		return blocos;
 	}
 
-	public ArrayList<Diretorio> getDiretorios() {
-		return diretorios;
+	public ArrayList<Directory> getDiretorios() {
+		return directories;
 	}
 
 	public LocalDateTime getDataDeCriacao() {
 		return dataDeCriacao;
 	}
 	
-	public boolean adicionaDiretorio(Diretorio dir) {
+	public boolean adicionaDiretorio(Directory dir) {
 		int k = verificaEspaco(dir.getTamanho()/Bloco.getTamanho());
 		boolean resultado = false;
 		if (k == -1)
 			return resultado;
-		this.diretorios.add(dir);
+		this.directories.add(dir);
 		this.tamanhoUtilizado += dir.getTamanho();
 		resultado = true;
 		for (int i = k; i < dir.getTamanho()/Bloco.getTamanho(); i++)
@@ -66,7 +66,7 @@ public class Particao {
 		return resultado;
 	}
 	
-	public boolean adicionaBloco(Diretorio dir) {
+	public boolean adicionaBloco(Directory dir) {
 		int k = verificaEspaco(dir.getTamanho()/Bloco.getTamanho());
 		boolean resultado = false;
 		if (k == -1)
@@ -115,8 +115,8 @@ public class Particao {
 	
 	public void atualizaTamanho() {
 		this.tamanhoUtilizado = 0;
-		for (int i = 0; i < diretorios.size(); i++)
-			this.tamanhoUtilizado += diretorios.get(i).getTamanho();
+		for (int i = 0; i < directories.size(); i++)
+			this.tamanhoUtilizado += directories.get(i).getTamanho();
 	}
 	
 	public void compacta() {
@@ -138,11 +138,11 @@ public class Particao {
 		retorno += "\tTamanho total: " + this.tamanhoTotal + "\n";
 		retorno += "\tTamanho utilizado: " + this.tamanhoUtilizado + "\n";
 		retorno += "\tData de criação: " + this.dataDeCriacao + "\n";
-		if (diretorios.size() != 0) {
+		if (directories.size() != 0) {
 			retorno += "\tDiretórios dentro dessa partição:\n";
-			Diretorio dir;
-			for (int i = 0; i < diretorios.size(); i++) {
-				dir = diretorios.get(i);
+			Directory dir;
+			for (int i = 0; i < directories.size(); i++) {
+				dir = directories.get(i);
 				retorno += "\t*****************************************\n";
 				retorno += "\t\tDiretório " + dir.getNome() + "\n";
 				retorno += "\t\t\tTamanho: " + dir.getTamanho() + "\n";
