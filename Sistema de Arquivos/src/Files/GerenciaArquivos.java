@@ -313,11 +313,11 @@ public class GerenciaArquivos {
 	}
 	
 	private void removeBlocoArq(Arquivo arq) {
-		for (int i = 0; i < principal.getBlocos().length; i++) {
-			if (principal.getBlocos()[i] != null) {
-				if (principal.getBlocos()[i].getArq() != null) {
-					if (principal.getBlocos()[i].getArq().equals(arq))
-						principal.getBlocos()[i] = null;
+		for (int i = 0; i < principal.getBlocks().length; i++) {
+			if (principal.getBlocks()[i] != null) {
+				if (principal.getBlocks()[i].getArq() != null) {
+					if (principal.getBlocks()[i].getArq().equals(arq))
+						principal.getBlocks()[i] = null;
 				}
 			}
 		}
@@ -361,11 +361,11 @@ public class GerenciaArquivos {
 	}
 	
 	private void removeBlocoDir(Diretorio dir) {
-		for (int i = 0; i < principal.getBlocos().length; i++) {
-			if (principal.getBlocos()[i] != null) {
-				if (principal.getBlocos()[i].getDir() != null) {
-					if (principal.getBlocos()[i].getDir().equals(dir))
-						principal.getBlocos()[i] = null;
+		for (int i = 0; i < principal.getBlocks().length; i++) {
+			if (principal.getBlocks()[i] != null) {
+				if (principal.getBlocks()[i].getDir() != null) {
+					if (principal.getBlocks()[i].getDir().equals(dir))
+						principal.getBlocks()[i] = null;
 				}
 			}
 		}
@@ -417,9 +417,9 @@ public class GerenciaArquivos {
 			return;
 		}
 		boolean found = false;
-		for (int i = 0; i < principal.getBlocos().length; i++) {
-			if (principal.getBlocos()[i] != null) {
-				if (principal.getBlocos()[i].getDir().equals(dir))
+		for (int i = 0; i < principal.getBlocks().length; i++) {
+			if (principal.getBlocks()[i] != null) {
+				if (principal.getBlocks()[i].getDir().equals(dir))
 					found = true;
 				if (found)
 					break;
@@ -431,30 +431,30 @@ public class GerenciaArquivos {
 		}
 		boolean pertence = false;
 		int k = 0;
-		for (int i = 0; i < dir.getTamanho()/Bloco.getTamanho(); i++) {
-			if (principal.getBlocos()[k] == null) {
+		for (int i = 0; i < dir.getTamanho()/Block.getTamanho(); i++) {
+			if (principal.getBlocks()[k] == null) {
 				i--;
 				k++;
 				continue;
 			}
-			if (principal.getBlocos()[k].getArq() != null) {
-				if (dir.getArquivos().contains(principal.getBlocos()[k].getArq())) {
+			if (principal.getBlocks()[k].getArq() != null) {
+				if (dir.getArquivos().contains(principal.getBlocks()[k].getArq())) {
 					k++;
 					continue;
 				}
 			}
-			if (principal.getBlocos()[k].getDir().equals(dir)) {
-				System.out.print("\t" + k + ".\t" + principal.getBlocos()[k++].toString());
+			if (principal.getBlocks()[k].getDir().equals(dir)) {
+				System.out.print("\t" + k + ".\t" + principal.getBlocks()[k++].toString());
 				continue;
 			}
 			for (int j = 0; j < dir.getDiretorios().size(); j++) {
-				if (principal.getBlocos()[k].getDir().equals(dir.getDiretorios().get(j))) {
+				if (principal.getBlocks()[k].getDir().equals(dir.getDiretorios().get(j))) {
 					pertence = true;
 					break;
 				}
 			}
 			if (pertence) {
-				System.out.print("\t" + k + ".\t" + principal.getBlocos()[k++].toString());
+				System.out.print("\t" + k + ".\t" + principal.getBlocks()[k++].toString());
 				pertence = false;
 			} else {
 				i--;
@@ -474,16 +474,16 @@ public class GerenciaArquivos {
 		} else {
 			int k;
 			for (int i = 0; i < dirAtual.getArquivos().size(); i++) {
-				for (k = 0; k < principal.getBlocos().length; k++) {
-					if (principal.getBlocos()[k] != null) {
-						if (principal.getBlocos()[k].getArq() != null) {
-							if (principal.getBlocos()[k].getArq().equals(dirAtual.getArquivos().get(i)))
+				for (k = 0; k < principal.getBlocks().length; k++) {
+					if (principal.getBlocks()[k] != null) {
+						if (principal.getBlocks()[k].getArq() != null) {
+							if (principal.getBlocks()[k].getArq().equals(dirAtual.getArquivos().get(i)))
 								break;
 						}
 					}
 				}
-				for (int j = 0; j < dirAtual.getArquivos().get(i).getTamanho()/Bloco.getTamanho(); j++)
-					System.out.print("\t" + k + ".\t" + principal.getBlocos()[k++].toString());
+				for (int j = 0; j < dirAtual.getArquivos().get(i).getTamanho()/Block.getTamanho(); j++)
+					System.out.print("\t" + k + ".\t" + principal.getBlocks()[k++].toString());
 			}
 		}
 	}
@@ -495,12 +495,12 @@ public class GerenciaArquivos {
 	}
 	
 	public void infoBloco() {
-		for (int i = 0; i < principal.getBlocos().length; i++) {
-			if (principal.getBlocos()[i] == null) {
-				System.out.print("\t" + i + ".\t" + Bloco.blocoNull());
+		for (int i = 0; i < principal.getBlocks().length; i++) {
+			if (principal.getBlocks()[i] == null) {
+				System.out.print("\t" + i + ".\t" + Block.blocoNull());
 				continue;
 			}
-			System.out.print("\t" + i + ".\t" + principal.getBlocos()[i].toString());
+			System.out.print("\t" + i + ".\t" + principal.getBlocks()[i].toString());
 		}
 	}
 	
