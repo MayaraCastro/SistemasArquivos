@@ -34,7 +34,7 @@ public class PromptComando {
 	public static void main(String[] args) {
 		 
 			
-		SystemFiles manager = SystemFiles.getInstance();
+		FileSystem manager = FileSystem.getInstance();
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		String nome;
@@ -135,7 +135,7 @@ public class PromptComando {
 				break;
 				
 			case "infoBlocoArq":
-				manager.infoBlocoArq();
+				manager.infoBlocofile();
 				break;
 			case "infoBlocoDir":
 				manager.infoBlocoDir(manager.getusedDir());
@@ -144,7 +144,7 @@ public class PromptComando {
 				manager.infoBloco();
 				break;
 			case "infoArq":
-				manager.infoArq(nome);
+				manager.infofile(nome);
 				break;
 				
 			case "infoDir":

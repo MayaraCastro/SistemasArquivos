@@ -1,20 +1,20 @@
 package Files;
 
-public class SystemFiles {
+public class FileSystem {
 
 	private Partition principal;
 	private String caminho;
 	private Directory usedDir;
-	private static SystemFiles instance;
+	private static FileSystem instance;
 	
-	private SystemFiles() {
+	private FileSystem() {
 		this.caminho = "";
 		this.usedDir = null;
 	}
 	
-	public static SystemFiles getInstance() {
+	public static FileSystem getInstance() {
 		if (instance == null)
-			instance = new SystemFiles();
+			instance = new FileSystem();
 		return instance;
 	}
 
@@ -193,7 +193,7 @@ public class SystemFiles {
 						return;
 					}
 				}
-				if (!principal.adicionaBloco(dir)) {
+				if (!principal.addBlock(dir)) {
 					System.err.println("Necessita compactação para a criação do diretório.");
 					return;
 				}
@@ -234,7 +234,7 @@ public class SystemFiles {
 					return;
 				}
 			}
-			if (!principal.adicionaBloco(dir)) {
+			if (!principal.addBlock(dir)) {
 				System.err.println("Necessita compactação para a criação do diretório.");
 				return;
 			}
@@ -262,9 +262,9 @@ public class SystemFiles {
 				return;
 			}
 		}
-		File arq = new File(nome, dados, this.caminho, usedDir);
+		File file = new File(nome, dados, this.caminho, usedDir);
 		
-		usedDir.addFile(arq);
+		usedDir.addFile(file);
 		principal.updatesize();
 		System.out.println("File adicionado com sucesso.");
 	}
@@ -284,40 +284,41 @@ public class SystemFiles {
 				return;
 			}
 		}
-		File arq = new File(nome, tamanho, this.caminho, usedDir);
-		if(!principal.adicionaBloco(arq)) {
+		File file = new File(nome, tamanho, this.caminho, usedDir);
+		if(!principal.addBlock(file)) {
 			System.err.println("Necessita compactação para a criação do File.");
 			return;
 		}
-		usedDir.addFile(arq);
+		usedDir.addFile(file);
 		principal.updatesize();
 		System.out.println("File adicionado com sucesso.");
 	}
 	
 	public void removeFile(String nome) {
-		File arq = null;
+		File file = null;
 		for (int i = 0; i < usedDir.getfiles().size(); i++) {
 			if (usedDir.getfiles().get(i).getExtension().equals(nome)) {
-				arq = usedDir.getfiles().get(i);
+				file = usedDir.getfiles().get(i);
 				break;
 			}
 		}
-		if (arq == null) {
+		if (file == null) {
 			System.err.println("O sistema não pode encontrar o File especificado.");
 		} else {
-			removeBlocoArq(arq);
-			usedDir.removeFile(arq);
+			removeBlockfile(file);
+			usedDir.removeFile(file);
 			principal.updatesize();
 			System.out.println("File removido com sucesso.");
 		}
 	}
 	
-	private void removeBlocoArq(File arq) {
+	private void removeBlockfile(File file) {
 		for (int i = 0; i < principal.getblocks().length; i++) {
 			if (principal.getblocks()[i] != null) {
-				if (principal.getblocks()[i].getArq() != null) {
-					if (principal.getblocks()[i].getArq().equals(arq))
+				if (principal.getblocks()[i].getFile() != null) {
+					if (principal.getblocks()[i].getFile().equals(file))
 						principal.getblocks()[i] = null;
+
 				}
 			}
 		}
@@ -366,6 +367,7 @@ public class SystemFiles {
 				if (principal.getblocks()[i].getDir() != null) {
 					if (principal.getblocks()[i].getDir().equals(dir))
 						principal.getblocks()[i] = null;
+
 				}
 			}
 		}
@@ -373,7 +375,7 @@ public class SystemFiles {
 	
 	private void removeBlocoDiretorio(Directory dir) {
 			for (int i = 0; i < dir.getfiles().size(); i++)
-				removeBlocoArq(dir.getfiles().get(i));
+				removeBlockfile(dir.getfiles().get(i));
 			for (int i = 0; i < dir.getdirectories().size(); i++)
 				removeBlocoDir(dir.getdirectories().get(i));
 			removeBlocoDir(dir);
@@ -391,21 +393,21 @@ public class SystemFiles {
 		System.out.print(principal.toString());
 	}
 	
-	public void infoArq(String nome) {
+	public void infofile(String nome) {
 		if (usedDir == null) {
 			System.err.println("O sistema não encontra-se em um diretório.");			
 		} else {
-			File arq = null;
+			File file = null;
 			for (int i = 0; i < usedDir.getfiles().size(); i++) {
 				if (usedDir.getfiles().get(i).getName().equals(nome)) {
-					arq = usedDir.getfiles().get(i);
+					file = usedDir.getfiles().get(i);
 					break;
 				}
 			}
-			if (arq == null) {
+			if (file == null) {
 				System.err.println("O sistema não pode encontrar o File especificado.");
 			} else {
-				System.out.println(arq.toString());
+				System.out.println(file.toString());
 			}
 		}
 	}
@@ -420,6 +422,7 @@ public class SystemFiles {
 		for (int i = 0; i < principal.getblocks().length; i++) {
 			if (principal.getblocks()[i] != null) {
 				if (principal.getblocks()[i].getDir().equals(dir))
+
 					found = true;
 				if (found)
 					break;
@@ -431,14 +434,16 @@ public class SystemFiles {
 		}
 		boolean pertence = false;
 		int k = 0;
-		for (int i = 0; i < dir.getsize()/Bloco.getSize(); i++) {
+		for (int i = 0; i < dir.getsize()/Block.getSize(); i++) {
 			if (principal.getblocks()[k] == null) {
+
 				i--;
 				k++;
 				continue;
 			}
-			if (principal.getblocks()[k].getArq() != null) {
-				if (dir.getfiles().contains(principal.getblocks()[k].getArq())) {
+			if (principal.getblocks()[k].getFile() != null) {
+				if (dir.getfiles().contains(principal.getblocks()[k].getFile())) {
+
 					k++;
 					continue;
 				}
@@ -449,12 +454,14 @@ public class SystemFiles {
 			}
 			for (int j = 0; j < dir.getdirectories().size(); j++) {
 				if (principal.getblocks()[k].getDir().equals(dir.getdirectories().get(j))) {
+
 					pertence = true;
 					break;
 				}
 			}
 			if (pertence) {
 				System.out.print("\t" + k + ".\t" + principal.getblocks()[k++].toString());
+
 				pertence = false;
 			} else {
 				i--;
@@ -463,7 +470,7 @@ public class SystemFiles {
 		}
 	}
 	
-	public void infoBlocoArq() {
+	public void infoBlocofile() {
 		if (usedDir == null) {
 			System.err.println("Não existe Files em caminho de partição.");
 			return;
@@ -476,14 +483,16 @@ public class SystemFiles {
 			for (int i = 0; i < usedDir.getfiles().size(); i++) {
 				for (k = 0; k < principal.getblocks().length; k++) {
 					if (principal.getblocks()[k] != null) {
-						if (principal.getblocks()[k].getArq() != null) {
-							if (principal.getblocks()[k].getArq().equals(usedDir.getfiles().get(i)))
+						if (principal.getblocks()[k].getFile() != null) {
+							if (principal.getblocks()[k].getFile().equals(usedDir.getfiles().get(i)))
+
 								break;
 						}
 					}
 				}
-				for (int j = 0; j < usedDir.getfiles().get(i).getSize()/Bloco.getSize(); j++)
+				for (int j = 0; j < usedDir.getfiles().get(i).getSize()/Block.getSize(); j++)
 					System.out.print("\t" + k + ".\t" + principal.getblocks()[k++].toString());
+
 			}
 		}
 	}
@@ -495,9 +504,10 @@ public class SystemFiles {
 	}
 	
 	public void infoBloco() {
+
 		for (int i = 0; i < principal.getblocks().length; i++) {
 			if (principal.getblocks()[i] == null) {
-				System.out.print("\t" + i + ".\t" + Bloco.blocoNull());
+				System.out.print("\t" + i + ".\t" + Block.blocoNull());
 				continue;
 			}
 			System.out.print("\t" + i + ".\t" + principal.getblocks()[i].toString());

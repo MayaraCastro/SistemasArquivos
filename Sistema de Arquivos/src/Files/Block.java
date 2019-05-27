@@ -3,7 +3,7 @@ package Files;
 public class Block {
 
 	private File file;
-	private Diretorio dir;
+	private Directory dir;
 	private static final int SIZE = 1;
 	
 	public Block(File file) {
@@ -11,7 +11,7 @@ public class Block {
 		this.dir = null;
 	}
 	
-	public Block(Diretorio dir) {
+	public Block(Directory dir) {
 		this.file = null;
 		this.dir = dir;
 	}
@@ -25,11 +25,11 @@ public class Block {
 		this.file = file;
 	}
 
-	public Diretorio getDir() {
+	public Directory getDir() {
 		return dir;
 	}
 
-	public void setDir(Diretorio dir) {
+	public void setDir(Directory dir) {
 		this.dir = dir;
 	}
 
@@ -40,8 +40,8 @@ public class Block {
 	@Override
 	public String toString() {
 		return "Bloco [" + (file != null ? "Arquivo = " + file.getExtensionName() + ", Caminho = " + "" + 
-						file.getPath() : "") + (dir != null ? "Diretório = "	+ "" + dir.getNome() + 
-						", Caminho = " + dir.getCaminho() : "") + "]\n";
+						file.getPath() : "") + (dir != null ? "Diretório = "	+ "" + dir.getName() + 
+						", Caminho = " + dir.getpath() : "") + "]\n";
 	}
 	
 	public static String blocoNull() {

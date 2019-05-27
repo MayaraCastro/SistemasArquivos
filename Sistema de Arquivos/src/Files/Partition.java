@@ -8,7 +8,7 @@ public class Partition {
 	private String name;
 	private int totalSize;
 	private int usedSize;
-	private Bloco [] blocks;
+	private Block [] blocks;
 	private ArrayList<Directory> directories;
 	private LocalDateTime dateofCreation;
 	
@@ -16,7 +16,7 @@ public class Partition {
 		this.name = name;
 		this.totalSize = totalSize;
 		this.usedSize = 0;
-		this.blocks = new Bloco[totalSize/Bloco.getsize()];
+		this.blocks = new Block[totalSize/Block.getSize()];
 		this.directories = new ArrayList<Directory>();
 		this.dateofCreation = LocalDateTime.now();
 	}
@@ -41,7 +41,7 @@ public class Partition {
 		return usedSize;
 	}
 
-	public Bloco [] getblocks() {
+	public Block [] getblocks() {
 		return blocks;
 	}
 
@@ -54,37 +54,37 @@ public class Partition {
 	}
 	
 	public boolean addDirectory(Directory dir) {
-		int k = verifySpace(dir.getsize()/Bloco.getsize());
+		int k = verifySpace(dir.getsize()/Block.getSize());
 		boolean result = false;
 		if (k == -1)
 			return result;
 		this.directories.add(dir);
 		this.usedSize += dir.getsize();
 		result = true;
-		for (int i = k; i < dir.getsize()/Bloco.getsize(); i++)
-			blocks[i] = new Bloco(dir);
+		for (int i = k; i < dir.getsize()/Block.getSize(); i++)
+			blocks[i] = new Block(dir);
 		return result;
 	}
 	
-	public boolean adicionaBloco(Directory dir) {
-		int k = verifySpace(dir.getsize()/Bloco.getsize());
+	public boolean addBlock(Directory dir) {
+		int k = verifySpace(dir.getsize()/Block.getSize());
 		boolean result = false;
 		if (k == -1)
 			return result;
 		result = true;
-		for (int i = 0; i < dir.getsize()/Bloco.getsize(); i++)
-			blocks[k++] = new Bloco(dir);
+		for (int i = 0; i < dir.getsize()/Block.getSize(); i++)
+			blocks[k++] = new Block(dir);
 		return result;
 	}
 	
-	public boolean adicionaBloco(File file) {
-		int k = verifySpace(file.getSize()/Bloco.getsize());
+	public boolean addBlock(File file) {
+		int k = verifySpace(file.getSize()/Block.getSize());
 		boolean result = false;
 		if (k == -1)
 			return result;
 		result = true;
-		for (int i = 0; i < file.getSize()/Bloco.getsize(); i++)
-			blocks[k++] = new Bloco(file);
+		for (int i = 0; i < file.getSize()/Block.getSize(); i++)
+			blocks[k++] = new Block(file);
 		return result;
 	}
 	
@@ -92,7 +92,7 @@ public class Partition {
 		int idx = -1;
 		int counter = 0;
 		boolean found  = false;
-		for (int i = 0; i < this.totalSize/Bloco.getsize(); i++) {
+		for (int i = 0; i < this.totalSize/Block.getSize(); i++) {
 			if (blocks[i] == null) {
 				if (!found) {
 					found = true;
@@ -120,7 +120,7 @@ public class Partition {
 	}
 	
 	public void compacta() {
-		ArrayList<Bloco> aux = new ArrayList<Bloco>();
+		ArrayList<Block> aux = new ArrayList<Block>();
 		for (int i = 0; i < blocks.length; i++) {
 			if (blocks[i] != null)
 				aux.add(blocks[i]);
