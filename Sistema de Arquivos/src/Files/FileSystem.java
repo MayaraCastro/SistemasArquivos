@@ -520,7 +520,7 @@ public class FileSystem {
 
 		for (int i = 0; i < principal.getblocks().length; i++) {
 			if (principal.getblocks()[i] == null) {
-				System.out.print("\t" + i + ".\t" + Block.blocoNull());
+				System.out.print("\t" + i + ".\t" + Block.nullBlock());
 				continue;
 			}
 			System.out.print("\t" + i + ".\t" + principal.getblocks()[i].toString());
