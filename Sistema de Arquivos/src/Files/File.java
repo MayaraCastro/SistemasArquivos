@@ -135,7 +135,7 @@ public class File {
 		String details = "\t\tFile " + this.getName() + "\n" +
 						"\t\t\tSize: " + this.getSize() + "\n" +
 						"\t\t\tExtension: " + this.getExtension() + "\n" +
-						"\t\t\tCreation Date: " + this.getCreationDate() + "\n";
+						"\t\t\tCreation Date: " + this.getCreationDate().toLocalDate().toString() + "\n";
 		return details;
 	}
 	

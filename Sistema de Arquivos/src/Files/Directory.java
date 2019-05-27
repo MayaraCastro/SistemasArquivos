@@ -111,8 +111,8 @@ public class Directory {
 		String retorno = "----------------------------------------------------------------\n";
 		retorno += "Diretório " + this.name + ":\n";
 		retorno += "\tsize: " + this.size + "\n";
-		retorno += "\tData de criação: " + this.creationDate + "\n";
-		retorno += "\tData de modificação: " + this.modificationDate + "\n";
+		retorno += "\tData de criação: " + this.creationDate.toLocalDate().toString() + "\n";
+		retorno += "\tData de modificação: " + this.modificationDate.toLocalDate().toString() + "\n";
 		retorno +="path"+this.path;
 
 		retorno += "----------------------------------------------------------------\n";

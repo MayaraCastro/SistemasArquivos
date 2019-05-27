@@ -137,7 +137,7 @@ public class Partition {
 		retorno += "Partição " + this.getName() + "\n";
 		retorno += "\tsize total: " + this.totalSize + "\n";
 		retorno += "\tsize utilizado: " + this.usedSize + "\n";
-		retorno += "\tData de criação: " + this.dateofCreation + "\n";
+		retorno += "\tData de criação: " + this.dateofCreation.toLocalDate().toString() + "\n";
 		if (directories.size() != 0) {
 			retorno += "\tDiretórios dentro dessa partição:\n";
 			Directory dir;
@@ -146,7 +146,7 @@ public class Partition {
 				retorno += "\t*****************************************\n";
 				retorno += "\t\tDiretório " + dir.getName() + "\n";
 				retorno += "\t\t\tsize: " + dir.getsize() + "\n";
-				retorno += "\t\t\tData de criação: " + dir.getcreationDate() + "\n";
+				retorno += "\t\t\tData de criação: " + dir.getcreationDate().toLocalDate().toString() + "\n";
 				retorno += "\t\t\tData de modificação: " + dir.getmodificationDate() + "\n";
 				retorno += "\t*****************************************\n";
 			}
