@@ -75,8 +75,8 @@ public class PromptComando {
 					break;
 				}
 			}
-			
-			switch (comando) {
+			if(comando!=null) {
+				switch (comando) {
 			case "exit":
 				return;
 	
@@ -89,10 +89,15 @@ public class PromptComando {
 				break;
 				
 			case "touch":
-				System.out.print("Tamanho do arquivo: ");
+				if(nome == null) {
+					System.out.println("Nome invalido!");
+				}else {
+					System.out.print("Tamanho do arquivo: ");
 				tamanho = sc.nextInt();
 				sc.nextLine();
 				manager.touch(nome, tamanho);
+				}
+				
 				break;
 				
 			case "txt": //cria arquivo txt
@@ -163,6 +168,8 @@ public class PromptComando {
 				System.err.println("\nComando não reconhecido pelo sistema.");
 				break;
 			}
+			}
+			
 		}
 		
 	}
