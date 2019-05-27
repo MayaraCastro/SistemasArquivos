@@ -114,23 +114,31 @@ public class Directory {
 		retorno += "\tData de criação: " + this.creationDate + "\n";
 		retorno += "\tData de modificação: " + this.modificationDate + "\n";
 		retorno +="path"+this.path;
+
+		retorno += "----------------------------------------------------------------\n";
+		
+		return retorno;
+	}
+	public String ls() {
+		String retorno = "----------------------------------------------------------------\n";
+		retorno+= "Pasta de "+ this.path +"\n";
 		if (files.size() != 0) {
-			retorno += "\tfiles do diretório:\n\n";
+			File file;
+			retorno += "\n";
 			for (int i = 0; i < files.size(); i++)
-				retorno += files.get(i).toString();
+			{
+				file = files.get(i);
+			retorno += file.getCreationDate().toLocalDate().toString() +"\t"+ "    " + "\t";
+			retorno +=  file.getSize()+"  " + file.getExtensionName()+"\n";
+			}
 		}
 		if (directory.size() != 0) {
-			retorno += "\tDiretórios dentro desse diretório:\n";
 			Directory dir;
 			for (int i = 0; i < directory.size(); i++) {
 				dir = directory.get(i);
-				retorno += "\t*****************************************\n";
-				retorno += "\t\tDiretório " + dir.getName() + "\n";
-				retorno += "\t\t\tsize: " + dir.getsize() + "\n";
-				retorno += "\t\t\tData de criação: " + dir.getcreationDate() + "\n";
-				retorno += "\t\t\tData de modificação: " + dir.getmodificationDate() + "\n";
-				retorno += "\t*****************************************\n";
-				retorno +="path"+dir.path;
+				retorno += dir.getmodificationDate().toLocalDate().toString() +"\t"+ "<DIR>" + "\t";
+				retorno +=  dir.getsize()+"  " +  dir.getName()+"\n";
+		
 			}
 		}
 		retorno += "----------------------------------------------------------------\n";

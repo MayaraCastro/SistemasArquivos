@@ -295,21 +295,26 @@ public class FileSystem {
 	}
 	
 	public void removeFile(String nome) {
-		File file = null;
-		for (int i = 0; i < usedDir.getfiles().size(); i++) {
-			if (usedDir.getfiles().get(i).getExtension().equals(nome)) {
-				file = usedDir.getfiles().get(i);
-				break;
-			}
-		}
-		if (file == null) {
-			System.err.println("O sistema não pode encontrar o File especificado.");
+		if (usedDir == null) {
+			System.err.println("O sistema não encontra-se em um diretório.");			
 		} else {
+			File file = null;
+			for (int i = 0; i < usedDir.getfiles().size(); i++) {
+				if (usedDir.getfiles().get(i).getName().equals(nome)) {
+					file = usedDir.getfiles().get(i);
+					break;
+				}
+			}
+			if (file == null) {
+				System.err.println("O sistema não pode encontrar o File especificado.");
+			} else {
+				
 			removeBlockfile(file);
 			usedDir.removeFile(file);
 			principal.updatesize();
 			System.out.println("File removido com sucesso.");
 		}
+	}
 	}
 	
 	private void removeBlockfile(File file) {
@@ -389,6 +394,14 @@ public class FileSystem {
 		}
 	}
 	
+	public void ls() {
+		if (usedDir == null) {
+			System.err.println("O sistema não encontra-se em um diretório.");
+		} else {
+			System.out.println(usedDir.ls());
+		}
+		
+	}
 	public void infoPart() {
 		System.out.print(principal.toString());
 	}

@@ -15,7 +15,9 @@ public class PromptComando {
 		help += "\ttxt - cria um arquivo de texto com os dados de entrada do usuário\n";
 		help += "\tmkdir - cria um diretório dentro do caminho atual ou dentro do caminho informado\n";
 		help += "\tcd - navega para um caminho informado\n";
-
+		help += "\tls - faz a listagem dos arquivos/direórios de um diretório\n";
+		help += "\tpwd - faz a listagem dos arquivos/direórios de um diretório\n";
+		
 		help += "\tinfoArq - informações de um arquivo\n";
 		help += "\tinfoDir - informações do diretório atual\n";
 		help += "\tinfoPart - informações da partição\n";
@@ -81,11 +83,20 @@ public class PromptComando {
 				return;
 	
 			case "rmkdir":
+				if(nome == null) {
+					System.out.println("Nome invalido!");
+				}else {
 				manager.removeDirectory(nome);
+				}
 				break;
 				
 			case "rm":
+				if(nome == null) {
+					System.out.println("Nome invalido!");
+				}else {
+				System.out.println(nome);
 				manager.removeFile(nome);
+				}
 				break;
 				
 			case "touch":
@@ -101,30 +112,42 @@ public class PromptComando {
 				break;
 				
 			case "txt": //cria arquivo txt
+				if(nome == null) {
+					System.out.println("Nome invalido!");
+				}else {
 				System.out.println("Texto do arquivo: ");
 				text = sc.nextLine();
 				manager.txt(nome, text);
+				}
 				break;
 				
 			case "mkdir":
-				if(nome.charAt(0)=='\\') {// com path absoluto
-					//separa nome e caminho
-					caminho = nome;
-					for(int i = caminho.length()-1; i>0; i--) {
-						if(caminho.charAt(i)=='\\') {
-							nome = caminho.substring(i+1, caminho.length());
-							caminho = caminho.substring(0, i+1);
-							break;
+				if(nome == null) {
+					System.out.println("Nome invalido!");
+				}else {
+					if(nome.charAt(0)=='\\') {// com path absoluto
+						//separa nome e caminho
+						caminho = nome;
+						for(int i = caminho.length()-1; i>0; i--) {
+							if(caminho.charAt(i)=='\\') {
+								nome = caminho.substring(i+1, caminho.length());
+								caminho = caminho.substring(0, i+1);
+								break;
+							}
 						}
+						manager.mkdir(caminho, nome);
+					}else {//relativo
+						manager.mkdir(nome);
 					}
-					manager.mkdir(caminho, nome);
-				}else {//relativo
-					manager.mkdir(nome);
+					
 				}
 				
 				break;
 				
 			case "cd":
+				if(nome == null) {
+					System.out.println("Caminho invalido!");
+				}else {
 				caminho = nome;
 				if(caminho.charAt(0)=='\\') {
 					manager.navega(caminho);
@@ -133,8 +156,17 @@ public class PromptComando {
 				}else {
 					manager.enter(caminho);
 				}
+				}
 				
 				break;
+				
+			case "pwd":
+				System.out.println(manager.getCaminho());
+				break;
+				
+			case "ls":
+				manager.ls();
+				break;	
 				
 			case "help":
 				System.out.println(help());
@@ -163,7 +195,7 @@ public class PromptComando {
 			case "compacta":
 				manager.compacta();
 				break;
-				
+			
 			default:
 				System.err.println("\nComando não reconhecido pelo sistema.");
 				break;
