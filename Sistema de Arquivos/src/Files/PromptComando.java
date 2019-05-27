@@ -34,7 +34,7 @@ public class PromptComando {
 	public static void main(String[] args) {
 		 
 			
-		GerenciaArquivos manager = GerenciaArquivos.getInstance();
+		SystemFiles manager = SystemFiles.getInstance();
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		String nome;
@@ -47,7 +47,7 @@ public class PromptComando {
 		System.out.print("Tamanho da partição: ");
 		tamanho = sc.nextInt();
 		sc.nextLine();
-		Particao principal = new Particao(nome, tamanho);
+		Partition principal = new Partition(nome, tamanho);
 		manager.setPrincipal(principal);
 		System.out.println("\n");
 		while(true) {
@@ -80,24 +80,24 @@ public class PromptComando {
 				return;
 	
 			case "rmkdir":
-				manager.removeDiretorio(nome);
+				manager.removeDirectory(nome);
 				break;
 				
 			case "rm":
-				manager.removeArquivo(nome);
+				manager.removeFile(nome);
 				break;
 				
 			case "touch":
 				System.out.print("Tamanho do arquivo: ");
 				tamanho = sc.nextInt();
 				sc.nextLine();
-				manager.criaArquivo(nome, tamanho);
+				manager.touch(nome, tamanho);
 				break;
 				
 			case "txt": //cria arquivo txt
 				System.out.println("Texto do arquivo: ");
 				text = sc.nextLine();
-				manager.criaArquivoDados(nome, text);
+				manager.txt(nome, text);
 				break;
 				
 			case "mkdir":
@@ -108,7 +108,6 @@ public class PromptComando {
 						if(caminho.charAt(i)=='\\') {
 							nome = caminho.substring(i+1, caminho.length());
 							caminho = caminho.substring(0, i+1);
-							System.out.println(caminho);
 							break;
 						}
 					}
@@ -139,7 +138,7 @@ public class PromptComando {
 				manager.infoBlocoArq();
 				break;
 			case "infoBlocoDir":
-				manager.infoBlocoDir(manager.getDirAtual());
+				manager.infoBlocoDir(manager.getusedDir());
 				break;
 			case "infoBloco":
 				manager.infoBloco();

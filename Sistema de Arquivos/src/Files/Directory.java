@@ -25,7 +25,7 @@ public class Directory {
 		this.parent = parent;
 	}
 	
-	public String getname() {
+	public String getName() {
 		return name;
 	}
 
@@ -59,7 +59,7 @@ public class Directory {
 		return files;
 	}
 
-	public ArrayList<Directory> getdirectory() {
+	public ArrayList<Directory> getdirectories() {
 		return directory;
 	}
 
@@ -82,25 +82,25 @@ public class Directory {
 		this.modificationDate = LocalDateTime.now();
 	}
 
-	public void adicionaArquivo(File file) {
+	public void addFile(File file) {
 		this.files.add(file);
 		updateSize();
 		this.modificationDate = LocalDateTime.now();
 	}
 	
-	public void removeArquivo(File file) {
+	public void removeFile(File file) {
 		this.files.remove(file);
 		updateSize();
 		this.modificationDate = LocalDateTime.now();
 	}
 	
-	public void adicionaDiretorio(Directory dir) {
+	public void addDirectory(Directory dir) {
 		this.directory.add(dir);
 		updateSize();
 		this.modificationDate = LocalDateTime.now();
 	}
 	
-	public void removeDiretorio(Directory dir) {
+	public void removeDirectory(Directory dir) {
 		this.directory.remove(dir);
 		updateSize();
 		this.modificationDate = LocalDateTime.now();
@@ -125,7 +125,7 @@ public class Directory {
 			for (int i = 0; i < directory.size(); i++) {
 				dir = directory.get(i);
 				retorno += "\t*****************************************\n";
-				retorno += "\t\tDiretório " + dir.getname() + "\n";
+				retorno += "\t\tDiretório " + dir.getName() + "\n";
 				retorno += "\t\t\tsize: " + dir.getsize() + "\n";
 				retorno += "\t\t\tData de criação: " + dir.getcreationDate() + "\n";
 				retorno += "\t\t\tData de modificação: " + dir.getmodificationDate() + "\n";
