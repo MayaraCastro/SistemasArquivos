@@ -6,19 +6,19 @@ public class PromptComando {
 	
 	private static String help() {
 		String help = "\nComandos disponíveis:\n";
-		help += "\texit - fecha o programa\n";
+		
+		
+		
+		help += "\trmkdir - remove um diretório dentro do diretório atual\n";
+		help += "\trm - remove um arquivo dentro do diretório atual\n";
+		help += "\ttouch - cria um arquivo do tamanho que o usuário deseja\n";
+		help += "\ttxt - cria um arquivo de texto com os dados de entrada do usuário\n";
+		help += "\tmkdir - cria um diretório dentro do caminho atual ou dentro do caminho informado\n";
+		help += "\tcd - navega para um caminho informado\n";
+
 		help += "\tinfoArq - informações de um arquivo\n";
 		help += "\tinfoDir - informações do diretório atual\n";
 		help += "\tinfoPart - informações da partição\n";
-		help += "\tremoveDir - remove um diretório dentro do diretório atual\n";
-		help += "\tremoveArq - remove um arquivo dentro do diretório atual\n";
-		help += "\tcriaArq - cria um arquivo do tamanho que o usuário deseja\n";
-		help += "\tcriaArqTexto - cria um arquivo de texto com os dados de entrada do usuário\n";
-		help += "\tcriaDir - cria um diretório dentro do caminho atual\n";
-		help += "\tcriaDirPath - cria um diretório dentro do caminho informado\n";
-		help += "\tnavega - navega para um caminho informado\n";
-		help += "\tenter - entra em um diretório dentro do diretório/partição atual\n";
-		help += "\tout - sai do diretório atual para o anterior\n";
 		help += "\tinfoBlocoArq - informações a respeito dos blocos do disco referente aos "
 				+ "arquivos do diretório atual\n";
 		help += "\tinfoBlocoDir - informações a respeito dos blocos do disco referente ao "
@@ -27,6 +27,7 @@ public class PromptComando {
 				+ "os blocos existentes\n";
 		help += "\tcompacta - compacta a memória\n";
 		help += "\thelp - comandos suportados pelo programa\n";
+		help += "\texit - fecha o programa\n";
 		return help;
 	}
 
