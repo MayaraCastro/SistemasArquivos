@@ -39,13 +39,13 @@ public class Block {
 
 	@Override
 	public String toString() {
-		return "Bloco [" + (file != null ? "Arquivo = " + file.getExtensionName() + ", Caminho = " + "" + 
-						file.getPath() : "") + (dir != null ? "Diretório = "	+ "" + dir.getName() + 
-						", Caminho = " + dir.getpath() : "") + "]\n";
+		return "Block [" + (file != null ? "File : " + file.getExtensionName() + ", Path : " +  
+						file.getPath() : "") + (dir != null ? "Directory = " + "" + dir.getName() + 
+						", Path = " + dir.getpath() : "") + "]\n";
 	}
 	
-	public static String blocoNull() {
-		return "Bloco []\n";
+	public static String nullBlock() {
+		return "Block []\n";
 	}
 	
 }
