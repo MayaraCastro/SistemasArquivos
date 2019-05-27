@@ -6,7 +6,7 @@ public class File {
 	private String name;
 	private String extension;
 	private LocalDateTime creationDate;
-//	private LocalDateTime dataDeModificacao; (manter apenas a data de criacao?)
+//	private LocalDateTime dataDeModificacao; (manter apenas a data de criação?)
 	private int size;
 	private String data;
 	private String path;
@@ -20,8 +20,8 @@ public class File {
 		this.path = path;
 		this.path += name;
 		this.setParent(parent);
-		geraNome(name);
-//		geraExtensao(nome);
+		makeName(name);
+		defineExtension(name);
 	}
 	
 	public File(String name, int size, String path, Directory parent) {
@@ -32,8 +32,8 @@ public class File {
 		this.path = path;
 		this.path += name;
 		this.setParent(parent);
-		geraNome(name);
-//		geraExtensao(nome);
+		makeName(name);
+		defineExtension(name);
 	}
 	
 	
@@ -100,7 +100,7 @@ public class File {
 //		this.dataDeModificacao = LocalDateTime.now();
 	}
 
-	private void geraNome(String nome) {
+	private void makeName(String nome) {
 		String aux = "";
 		for (int i = 0; i < nome.length(); i++) {
 			if (nome.charAt(i) != '.') {
@@ -110,6 +110,24 @@ public class File {
 			}
 		}
 		this.name = aux;
+	}
+	
+	private void defineExtension(String nome) {
+		String aux = "";
+		boolean getExtensao = false;
+		for (int i = 0; i < nome.length(); i++) {
+			if (nome.charAt(i) == '.') {
+				getExtensao = true;
+			}
+			if (getExtensao) {
+				aux += nome.charAt(i);
+			}
+		}
+		this.extension = aux;
+	}
+
+	public String getExtensionName() {
+		return this.name + this.extension;
 	}
 	
 	@Override
