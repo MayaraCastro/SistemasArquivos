@@ -2,7 +2,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "fs.h"
 
+ struct Diretorio{
+    char nome[];
+	 char extensao[];
+	 int dataDeCriacao;
+	 int dataDeModificacao;
+	 int tamanho;
+	 char dados[];
+	 char caminho[];
+	 struct Diretorio *pai;
+};
+
+
+struct{
+    char nome[];
+	 char extensao[];
+	 int dataDeCriacao;
+	 int dataDeModificacao;
+	 int tamanho;
+	 char dados[];
+	 char caminho[];
+	 Diretorio *pai;
+}typedef arquivo;
 
 /*
   Function Declarations for builtin shell commands:
@@ -80,7 +103,19 @@ int lsh_exit(char **args)
 {
   return 0;
 }
+int create(char **args) {
 
+    myext2_inode current_dir_inode;
+    inode_read(current_dir_inode_id, &current_dir_inode);
+    if (args == 'mkdir') {
+        dir_create(current_dir_inode_id, &current_dir_inode, file_name);
+    } else if (args == 'f') {
+        file_create(current_dir_inode_id, &current_dir_inode, file_name);
+    } else {
+        printf("Invalid File Type.\n");
+    }
+    return 0;
+}
 /**
   @brief Launch a program and wait for it to terminate.
   @param args Null terminated list of arguments (including program).
@@ -90,6 +125,7 @@ int lsh_launch(char **args)
 {
     printf("%s \n", *args);
 
+create(**args)
   return 1;
 }
 

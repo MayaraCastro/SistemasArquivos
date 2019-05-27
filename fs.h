@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-// global var 
+// global var
 group_descriptor group_desc;
 
 uint16_t root_dir_inode_id;
@@ -66,7 +66,7 @@ int dir_root_create();
 /**Funcoes de carga do sistema de arquivos**/
 int fs_init() {
 	printf("Iniciando Sistema...\n");
-	// Verifica se o sistema de arquivos existe 
+	// Verifica se o sistema de arquivos existe
 	int retorno = fs_check();
 	//Se o retorno
 	if (fs_check < 0) {
@@ -74,7 +74,7 @@ int fs_init() {
 		formatacao();
 		load_global();
 	} else {
-		// load fs 
+		// load fs
 		fp = fopen(PATH, "r+");
 		if (fp == NULL) {
 			printf("ERROR DE INICIALIZACAO\nExiting...\n");
@@ -139,7 +139,7 @@ int load_global() {
 int formatacao() {
 
     printf("FS Formating...\n");
-    
+
     if (fs_check(PATH) == 0) {
         fs_delete(PATH);
     }
@@ -153,7 +153,7 @@ int formatacao() {
     printf("Input Volume Name\n");
     char volume_name[16];
     scanf("%s", volume_name);
-    
+
     fs_create(volume_name);
 
     dir_root_create();
@@ -254,7 +254,7 @@ int indBlck_append(uint16_t  id, inode *ind, char *data, uint32_t data_size, uin
     } else if (blocks > ind->nblock) {
         indBlck_alloc( id, ind, blocks-ind->nblock);
     }
-    //find where to append 
+    //find where to append
     int write_block = offset / BLOCK_SIZE;
     int write_offset = offset % BLOCK_SIZE;
     int write_data_size =  data_size;
@@ -277,13 +277,13 @@ int indBlck_append(uint16_t  id, inode *ind, char *data, uint32_t data_size, uin
 int indBlck_free(uint16_t  id, inode *ind, uint16_t num) {
     if (ind == NULL) return -1;
     if (num >= ind->nblock) {
-        // free direct index  
+        // free direct index
         int direct_index = (num <= DIRECT_INDEX_BLOCKS) ? num : DIRECT_INDEX_BLOCKS;
         for (int i = 0; i < direct_index; ++i) {
             block_free(ind->ptrblock[i]);
             ind->ptrblock[i] = 0;
         }
-        //free one index  
+        //free one index
         int one_index = (num-DIRECT_INDEX_BLOCKS > ONE_INDEX_BLOCKS) ? ONE_INDEX_BLOCKS : num-DIRECT_INDEX_BLOCKS;
         if (one_index > 0) {
             uint16_t *block_ids = (uint16_t *) malloc(one_index*sizeof(uint16_t));
@@ -293,7 +293,7 @@ int indBlck_free(uint16_t  id, inode *ind, uint16_t num) {
             }
             free(block_ids);
         }
-        // free two index  
+        // free two index
         int two_index = num-DIRECT_INDEX_BLOCKS-ONE_INDEX_BLOCKS;
         if (two_index > 0) {
             int array_num = two_index / (ONE_INDEX_BLOCKS);
@@ -368,9 +368,9 @@ int indBlck_free(uint16_t  id, inode *ind, uint16_t num) {
                     free(block_ids);
                     if (free_blocks_except_last_num >= 0) block_free(block_array[array_num]);
                 }
-                
+
                 if (free_array_num > 0) {
-                    uint16_t *block_ids = (uint16_t *)malloc(BLOCK_SIZE*sizeof(uint16_t));                
+                    uint16_t *block_ids = (uint16_t *)malloc(BLOCK_SIZE*sizeof(uint16_t));
                     for (int i = 0, index = array_num-1; i < free_array_num; ++i, --index) {
                         block_read(block_array[index], block_ids, BLOCK_SIZE*sizeof(uint16_t));
                         for (int j = 0; j < BLOCK_SIZE; ++j) {
@@ -383,7 +383,7 @@ int indBlck_free(uint16_t  id, inode *ind, uint16_t num) {
                 }
 
                 if (free_last_num > 0) {
-                    uint16_t *block_ids = (uint16_t *)malloc(BLOCK_SIZE*sizeof(uint16_t));                
+                    uint16_t *block_ids = (uint16_t *)malloc(BLOCK_SIZE*sizeof(uint16_t));
                     int free_index = array_num-free_array_num-1;
                     block_read(block_array[free_index], block_ids, BLOCK_SIZE*sizeof(uint16_t));
                     for (int i = 0, index = BLOCK_SIZE-1; i < free_last_num; ++i, --index) {
@@ -604,6 +604,8 @@ int indBlck_read(uint16_t  id, inode *ind, char *data, uint32_t data_size) {
     }
     return 0;
 }
+
+
 
 /** DIR ROOT**/
 
