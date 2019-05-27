@@ -25,7 +25,7 @@ public class File {
 	}
 	
 	public File(String name, int size, String path, Directory parent) {
-		this.data = data;
+		this.data = "";
 		this.size = data.length() + 1;
 		this.creationDate = LocalDateTime.now();
 //		this.dataDeModificacao = LocalDateTime.now();
