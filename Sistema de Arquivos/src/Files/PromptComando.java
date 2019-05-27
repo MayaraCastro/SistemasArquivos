@@ -29,96 +29,112 @@ public class PromptComando {
 		help += "\thelp - comandos suportados pelo programa\n";
 		return help;
 	}
-	
+
+
 	public static void main(String[] args) {
-		
+		 
+			
 		GerenciaArquivos manager = GerenciaArquivos.getInstance();
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		String nome;
-		String key;
 		String text;
 		String caminho;
 		int tamanho;
 		System.out.println("\t\t\tBem-vindo!");
-		System.out.print("Dê um nome a sua partição: ");
+		System.out.print("Criar partição: ");
 		nome = sc.nextLine();
-		System.out.print("Informe o tamanho da sua partição: ");
+		System.out.print("Tamanho da partição: ");
 		tamanho = sc.nextInt();
 		sc.nextLine();
 		Particao principal = new Particao(nome, tamanho);
 		manager.setPrincipal(principal);
-		System.out.println("Partição criada com sucesso!");
+		System.out.println("\n");
 		while(true) {
+			
 			System.out.print(manager.getCaminho() + ">");
-			key = sc.nextLine();
-			switch (key) {
+			String line;
+			String comando = null;
+			nome=null;
+			line = sc.nextLine();
+			
+			//Separa o comando e o nome
+			for(int i =0; i<line.length();i++) {
+				if(line.charAt(i)==' ' || i== line.length()-1 ) {
+					
+					if(i== line.length()-1) {
+						comando = line.substring(0, line.length());
+					}
+					else {
+						comando = line.substring(0, i);
+						nome = line.substring(i+1, line.length());
+					
+					}
+
+					break;
+				}
+			}
+			
+			switch (comando) {
 			case "exit":
 				return;
-			case "infoArq":
-				System.out.print("Nome do arquivo: ");
-				nome = sc.nextLine();
-				manager.infoArq(nome);
-				break;
-			case "infoDir":
-				manager.infoDir();
-				break;
-			case "infoPart":
-				manager.infoPart();
-				break;
-			case "removeDir":
-				System.out.print("Nome do diretório: ");
-				nome = sc.nextLine();
+	
+			case "rmkdir":
 				manager.removeDiretorio(nome);
 				break;
-			case "removeArq":
-				System.out.print("Nome do arquivo: ");
-				nome = sc.nextLine();
+				
+			case "rm":
 				manager.removeArquivo(nome);
 				break;
-			case "criaArq":
-				System.out.print("Nome do arquivo: ");
-				nome = sc.nextLine();
+				
+			case "touch":
 				System.out.print("Tamanho do arquivo: ");
 				tamanho = sc.nextInt();
 				sc.nextLine();
 				manager.criaArquivo(nome, tamanho);
 				break;
-			case "criaArqTexto":
-				System.out.print("Nome do arquivo: ");
-				nome = sc.nextLine();
+				
+			case "txt": //cria arquivo txt
 				System.out.println("Texto do arquivo: ");
 				text = sc.nextLine();
 				manager.criaArquivoDados(nome, text);
 				break;
-			case "criaDir":
-				System.out.print("Nome do diretório: ");
-				nome = sc.nextLine();
-				manager.criaDiretorio(nome);
+				
+			case "mkdir":
+				if(nome.charAt(0)=='\\') {// com path absoluto
+					//separa nome e caminho
+					caminho = nome;
+					for(int i = caminho.length()-1; i>0; i--) {
+						if(caminho.charAt(i)=='\\') {
+							nome = caminho.substring(i+1, caminho.length());
+							caminho = caminho.substring(0, i+1);
+							System.out.println(caminho);
+							break;
+						}
+					}
+					manager.mkdir(caminho, nome);
+				}else {//relativo
+					manager.mkdir(nome);
+				}
+				
 				break;
-			case "criaDirPath":
-				System.out.print("Nome do diretório: ");
-				nome = sc.nextLine();
-				System.out.print("Caminho do diretório: ");
-				caminho = sc.nextLine();
-				manager.criaDiretorio(caminho, nome);
+				
+			case "cd":
+				caminho = nome;
+				if(caminho.charAt(0)=='\\') {
+					manager.navega(caminho);
+				}else if(caminho .length()>= 3 && caminho.substring(0, 3).equals("..\\")) {
+					manager.out();
+				}else {
+					manager.enter(caminho);
+				}
+				
 				break;
-			case "navega":
-				System.out.print("Caminho: ");
-				caminho = sc.nextLine();
-				manager.navega(caminho);
-				break;
+				
 			case "help":
 				System.out.println(help());
 				break;
-			case "enter":
-				System.out.print("Diretório: ");
-				nome = sc.nextLine();
-				manager.enter(nome);
-				break;
-			case "out":
-				manager.out();
-				break;
+				
 			case "infoBlocoArq":
 				manager.infoBlocoArq();
 				break;
@@ -127,6 +143,17 @@ public class PromptComando {
 				break;
 			case "infoBloco":
 				manager.infoBloco();
+				break;
+			case "infoArq":
+				manager.infoArq(nome);
+				break;
+				
+			case "infoDir":
+				manager.infoDir();
+				break;
+				
+			case "infoPart":
+				manager.infoPart();
 				break;
 			case "compacta":
 				manager.compacta();

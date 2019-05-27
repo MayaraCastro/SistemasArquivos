@@ -113,6 +113,7 @@ public class Diretorio {
 		retorno += "\tTamanho: " + this.tamanho + "\n";
 		retorno += "\tData de criação: " + this.dataDeCriacao + "\n";
 		retorno += "\tData de modificação: " + this.dataDeModificacao + "\n";
+		retorno +="caminho"+this.caminho;
 		if (arquivos.size() != 0) {
 			retorno += "\tArquivos do diretório:\n\n";
 			for (int i = 0; i < arquivos.size(); i++)
@@ -129,6 +130,7 @@ public class Diretorio {
 				retorno += "\t\t\tData de criação: " + dir.getDataDeCriacao() + "\n";
 				retorno += "\t\t\tData de modificação: " + dir.getDataDeModificacao() + "\n";
 				retorno += "\t*****************************************\n";
+				retorno +="caminho"+dir.caminho;
 			}
 		}
 		retorno += "----------------------------------------------------------------\n";

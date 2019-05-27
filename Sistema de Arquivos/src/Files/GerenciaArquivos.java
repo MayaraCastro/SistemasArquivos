@@ -166,7 +166,7 @@ public class GerenciaArquivos {
 		}
 	}
 	
-	public void criaDiretorio(String caminho, String nome) {
+	public void mkdir(String caminho, String nome) {
 		if (principal.getTamanhoUtilizado() + 2 > principal.getTamanhoTotal()) {
 			System.err.println("Não há espaço suficiente para criar um diretório.");
 			return;
@@ -208,7 +208,7 @@ public class GerenciaArquivos {
 		}
 	}
 
-	public void criaDiretorio(String nome) {
+	public void mkdir(String nome) {
 		if (principal.getTamanhoUtilizado() + 2 > principal.getTamanhoTotal()) {
 			System.err.println("Não há espaço suficiente para criar um diretório.");
 			return;
