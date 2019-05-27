@@ -44,13 +44,16 @@ public class PromptComando {
 		String text;
 		String caminho;
 		int tamanho;
-		System.out.println("\t\t\tBem-vindo!");
-		System.out.print("Criar partição: ");
+		
+		/*System.out.print("Criar partição: ");
 		nome = sc.nextLine();
 		System.out.print("Tamanho da partição: ");
 		tamanho = sc.nextInt();
 		sc.nextLine();
-		Partition principal = new Partition(nome, tamanho);
+		Partition principal = new Partition(nome, tamanho);*/
+		
+		Partition principal = new Partition("C", 20);
+		
 		manager.setPrincipal(principal);
 		System.out.println("\n");
 		while(true) {
