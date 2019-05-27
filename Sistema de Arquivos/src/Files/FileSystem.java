@@ -263,7 +263,10 @@ public class FileSystem {
 			}
 		}
 		File file = new File(nome, dados, this.caminho, usedDir);
-		
+		if(!principal.addBlock(file)) {
+			System.err.println("Necessita compactação para a criação do File.");
+			return;
+		}
 		usedDir.addFile(file);
 		principal.updatesize();
 		System.out.println("File adicionado com sucesso.");
