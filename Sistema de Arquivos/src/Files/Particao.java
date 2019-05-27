@@ -77,7 +77,7 @@ public class Particao {
 		return resultado;
 	}
 	
-	public boolean adicionaBloco(Arquivo arq) {
+	public boolean adicionaBloco(File arq) {
 		int k = verificaEspaco(arq.getTamanho()/Bloco.getTamanho());
 		boolean resultado = false;
 		if (k == -1)

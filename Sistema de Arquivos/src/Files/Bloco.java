@@ -2,11 +2,11 @@ package Files;
 
 public class Bloco {
 
-	private Arquivo arq;
+	private File arq;
 	private Diretorio dir;
 	private static final int TAMANHO = 1;
 	
-	public Bloco(Arquivo arq) {
+	public Bloco(File arq) {
 		this.arq = arq;
 		this.dir = null;
 	}
@@ -16,11 +16,11 @@ public class Bloco {
 		this.dir = dir;
 	}
 
-	public Arquivo getArq() {
+	public File getArq() {
 		return arq;
 	}
 
-	public void setArq(Arquivo arq) {
+	public void setArq(File arq) {
 		this.arq = arq;
 	}
 
